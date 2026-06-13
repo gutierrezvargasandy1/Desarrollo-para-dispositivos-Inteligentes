@@ -1,11 +1,5 @@
 package mx.utng.smarthealthmonitor.ui.screens
 
-
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import mx.utng.smarthealthmonitor.BuildConfig
-import mx.utng.smarthealthmonitor.ui.viewmodel.DashboardViewModel
 import SmartHealthMonitorTheme
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
@@ -24,36 +18,69 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import mx.utng.smarthealthmonitor.BuildConfig
 import mx.utng.smarthealthmonitor.data.SmartHealthRepository
 import mx.utng.smarthealthmonitor.ui.components.FilaHistorial
 import mx.utng.smarthealthmonitor.ui.components.TarjetaDato
+import mx.utng.smarthealthmonitor.ui.viewmodel.DashboardViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     onHistorialClick: () -> Unit = {},
-    onAlertClick: () -> Unit = {},
     viewModel: DashboardViewModel = viewModel()
 ) {
-    val fc     by viewModel.fc.collectAsState()
-    val pasos  by viewModel.pasos.collectAsState()
+    val fc by viewModel.fc.collectAsState()
+    val pasos by viewModel.pasos.collectAsState()
     val historial by viewModel.historial.collectAsState()
+
+    // ── estado del dialogo y snackbar ──
+    var mostrarAlerta by remember { mutableStateOf(false) }
+    val snackbarHost = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    // ── dialogo condicional de emergencia ──
+    if (mostrarAlerta) {
+        AlertaScreen(
+            fc = fc,
+            onDismiss = { mostrarAlerta = false },
+            onConfirmar = {
+                mostrarAlerta = false
+                scope.launch {
+                    snackbarHost.showSnackbar(
+                        message = "Alerta enviada a tus contactos de emergencia",
+                        duration = SnackbarDuration.Long
+                    )
+                }
+            }
+        )
+    }
+
     SmartHealthMonitorTheme {
-
         Scaffold(
-
+            snackbarHost = { SnackbarHost(hostState = snackbarHost) },
             topBar = {
                 TopAppBar(
                     title = {
@@ -68,10 +95,9 @@ fun DashboardScreen(
                     )
                 )
             },
-
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = onAlertClick,
+                    onClick = { mostrarAlerta = true },
                     containerColor = MaterialTheme.colorScheme.error
                 ) {
                     Icon(
@@ -81,20 +107,17 @@ fun DashboardScreen(
                     )
                 }
             }
-
         ) { paddingValues ->
 
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
-
                 contentPadding = PaddingValues(16.dp),
-
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
 
-                // Tarjeta Frecuencia Cardíaca
+                // tarjeta frecuencia cardiaca
                 item {
                     TarjetaDato(
                         valor = fc.toString(),
@@ -104,7 +127,7 @@ fun DashboardScreen(
                     )
                 }
 
-                // Tarjeta Pasos
+                // tarjeta pasos
                 item {
                     TarjetaDato(
                         valor = "%,d".format(pasos),
@@ -114,14 +137,13 @@ fun DashboardScreen(
                     )
                 }
 
-                // Encabezado Historial
+                // encabezado historial
                 item {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
                         Text(
                             text = "Historial reciente",
                             style = MaterialTheme.typography.titleMedium
@@ -135,33 +157,26 @@ fun DashboardScreen(
                     }
                 }
 
-                // Lista Historial
+                // lista historial desde room db
                 items(
                     items = historial,
                     key = { it.id }
                 ) { lectura ->
-
                     FilaHistorial(
                         lectura = lectura
                     )
                 }
+
+                // botonera de simulacion debug
                 item {
                     if (BuildConfig.DEBUG) {
                         OutlinedButton(
                             onClick = {
-
                                 val fcSimulado = (60..110).random()
-
                                 CoroutineScope(Dispatchers.IO).launch {
-
-                                    SmartHealthRepository.actualizarFC(
-                                        fcSimulado
-                                    )
+                                    SmartHealthRepository.actualizarFC(fcSimulado)
                                 }
-
-                                SmartHealthRepository.actualizarPasos(
-                                    (3000..8000).random()
-                                )
+                                SmartHealthRepository.actualizarPasos((3000..8000).random())
                             }
                         ) {
                             Text("Simular dato del wearable (DEBUG)")
@@ -186,7 +201,6 @@ fun DashboardScreen(
 )
 @Composable
 private fun DashboardScreenPreview() {
-
     SmartHealthMonitorTheme {
         DashboardScreen()
     }
