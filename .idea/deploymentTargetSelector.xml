@@ -4,17 +4,25 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-06-01T02:50:44.536831200Z">
+        <DropdownSelection timestamp="2026-06-12T21:25:22.462283500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\andre\.android\avd\Small_Phone.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\andre\.android\avd\Wear_OS_Large_Round.avd" />
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="DashboardScreenPreview">
+      <SelectionState runConfigName="wearos">
         <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2026-06-12T21:25:27.677796500Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\andre\.android\avd\Wear_OS_Large_Round.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
       </SelectionState>
     </selectionStates>
   </component>
