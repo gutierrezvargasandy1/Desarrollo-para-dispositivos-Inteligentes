@@ -33,6 +33,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import mx.utng.smarthealthmonitor.data.SmartHealthRepository
 import mx.utng.smarthealthmonitor.ui.components.FilaHistorial
 import mx.utng.smarthealthmonitor.ui.components.TarjetaDato
@@ -46,7 +49,7 @@ fun DashboardScreen(
 ) {
     val fc     by viewModel.fc.collectAsState()
     val pasos  by viewModel.pasos.collectAsState()
-    val historial = viewModel.historial
+    val historial by viewModel.historial.collectAsState()
     SmartHealthMonitorTheme {
 
         Scaffold(
@@ -146,11 +149,20 @@ fun DashboardScreen(
                     if (BuildConfig.DEBUG) {
                         OutlinedButton(
                             onClick = {
+
                                 val fcSimulado = (60..110).random()
-                                SmartHealthRepository.actualizarFC(fcSimulado)
-                                SmartHealthRepository.actualizarPasos((3000..8000).random())
-                            },
-                            modifier = Modifier.fillMaxWidth()
+
+                                CoroutineScope(Dispatchers.IO).launch {
+
+                                    SmartHealthRepository.actualizarFC(
+                                        fcSimulado
+                                    )
+                                }
+
+                                SmartHealthRepository.actualizarPasos(
+                                    (3000..8000).random()
+                                )
+                            }
                         ) {
                             Text("Simular dato del wearable (DEBUG)")
                         }
