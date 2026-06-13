@@ -16,7 +16,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost import androidx.navigation.compose.composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import mx.utng.smarthealthmonitor.LoginScreen
 import mx.utng.smarthealthmonitor.ui.screens.DashboardScreen
@@ -27,64 +28,73 @@ fun SmartHealthNavGraph() {
     val navController = rememberNavController()
 
     NavHost(
-        navController    = navController,         startDestination = Screen.Login.route
+        navController = navController,
+        startDestination = Screen.Login.route
     ) {
-        // ── Login ──────────────────────────────────────
+        // ── login ──────────────────────────────────────
         composable(Screen.Login.route) {
-            LoginScreen(                 onLoginSuccess = {
-                navController.navigate(Screen.Dashboard.route) {
-                    popUpTo(Screen.Login.route) {
-                        inclusive = true  // eliminar Login del back stack
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(Screen.Dashboard.route) {
+                        popUpTo(Screen.Login.route) {
+                            inclusive = true // eliminar login del back stack
+                        }
                     }
                 }
-            }
             )
         }
-        // ── Dashboard ──────────────────────────────────
-        composable(Screen.Dashboard.route) {
-            DashboardScreen(                 onHistorialClick = {
-                navController.navigate(Screen.Historial.route)
-            },
-                onAlertClick = {
-                    navController.navigate(Screen.Alerta.route)
-                }
-            )
-        }
-        // ── Historial ──────────────────────────────────
-        composable(Screen.Historial.route) {
 
+        // ── dashboard ──────────────────────────────────
+        composable(Screen.Dashboard.route) {
+            DashboardScreen(
+                onHistorialClick = {
+                    navController.navigate(Screen.Historial.route)
+                }
+                // se elimino onalertclick porque el dialogo se controla internamente con state
+            )
+        }
+
+        // ── historial ──────────────────────────────────
+        composable(Screen.Historial.route) {
             HistorialScreen(
                 onBack = {
                     navController.popBackStack()
                 }
             )
         }
-        // ── Alerta ─────────────────────────────────────
-        composable(Screen.Alerta.route) {
-            PantallaEnConstruccion(                 titulo = "Enviar alerta",
-                onBack = { navController.popBackStack() }
-            )
-        }
     }
 }
 
-// Pantalla temporal para destinos no implementados aún
+// pantalla temporal para destinos no implementados aun
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaEnConstruccion(titulo: String, onBack: () -> Unit) {
     SmartHealthMonitorTheme {
-        Scaffold(topBar = {
-            TopAppBar(
-                title = { Text(titulo) },                 navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack,                             contentDescription = "Regresar")
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(titulo) },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Regresar"
+                            )
+                        }
                     }
-                }
-            )
-        }) { pad ->
-            Box(Modifier.fillMaxSize().padding(pad),                 contentAlignment = Alignment.Center) {
-                Text("Próximamente: $titulo",
-                    style = MaterialTheme.typography.titleMedium)
+                )
+            }
+        ) { pad ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(pad),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Próximamente: $titulo",
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         }
     }
