@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class WearDashboardViewModel : ViewModel() {
 
-    private val _fc = MutableStateFlow(72)
+    private val _fc = MutableStateFlow(120)
 
     val fc: StateFlow<Int> = _fc
 
