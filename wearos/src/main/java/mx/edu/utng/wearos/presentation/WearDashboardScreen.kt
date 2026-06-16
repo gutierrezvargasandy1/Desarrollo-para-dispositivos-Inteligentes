@@ -18,58 +18,58 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.rememberScalingLazyListState
 import mx.edu.utng.wearos.presentation.components.WearFCCard
 
-
 @Composable
 fun WearDashboardScreen(
     onAlertClick: () -> Unit = {},
+    onHistorialClick: () -> Unit = {},         // NUEVO
     viewModel: WearDashboardViewModel = viewModel()
 ) {
 
     val fc by viewModel.fc.collectAsState()
-
     val listState = rememberScalingLazyListState()
 
     Scaffold(
-
         timeText = {
             TimeText()
         },
-
         positionIndicator = {
             PositionIndicator(
                 scalingLazyListState = listState
             )
         }
-
     ) {
 
         ScalingLazyColumn(
-            state = listState,
+            state    = listState,
             modifier = Modifier.fillMaxSize()
         ) {
 
             item {
-
                 WearFCCard(
-                    fc = fc,
+                    fc       = fc,
                     modifier = Modifier.fillMaxWidth()
                 )
-
             }
 
             item {
-
                 Chip(
-                    label = {
-                        Text("🚨 Alerta")
-                    },
+                    label   = { Text("🚨 Alerta") },
                     onClick = onAlertClick,
-                    colors = ChipDefaults.primaryChipColors(
+                    colors  = ChipDefaults.primaryChipColors(
                         backgroundColor = MaterialTheme.colors.error
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
+            }
 
+            // NUEVO chip de Historial
+            item {
+                Chip(
+                    label    = { Text("📋 Historial") },
+                    onClick  = onHistorialClick,
+                    colors   = ChipDefaults.secondaryChipColors(),
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
