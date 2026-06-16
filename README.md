@@ -24,6 +24,27 @@ Aplicación Android de monitoreo de salud personal en tiempo real. Desarrollada 
 | **DashboardScreen** | Visualización de FC y Pasos en tiempo real provenientes del wearable con botón de pánico |
 | **HistorialScreen** | Listado de lecturas persistidas en Room DB mediante el uso de Flow reactivo |
 | **AlertaScreen** | Diálogo emergente (AlertDialog MD3) con spinner de carga y Snackbar de confirmación |
+## Unidad II — Wear OS
+| Pantalla | Descripción |
+|---|---|
+| WearDashboardScreen | FC en tiempo real con ScalingLazyColumn y TimeText |
+| WearHistorialScreen | Lista con Rotary Input (corona del reloj) |
+| WearAlertaScreen | Botones circulares de confirmación |
+| SmartHealth WatchFace | Hora + FC en el WatchFace nativo |
+
+### WatchFace
+
+![WatchFace](screenshots/watchface.png)
+
+### WearDashboard
+
+![WearDashboard](screenshots/wear_dashboard.png)
+
+Paso 2 — PR y Tag v1.2.0
+11.En GitHub: Compare & pull request → título: feat: Wear OS advanced — Rotary Input + WatchFace — S10 Unidad II.
+12.Merge pull request → Confirm merge.
+Checklist de autoevaluación — Unidad II completa
+
 
 ## Capturas de pantalla
 
