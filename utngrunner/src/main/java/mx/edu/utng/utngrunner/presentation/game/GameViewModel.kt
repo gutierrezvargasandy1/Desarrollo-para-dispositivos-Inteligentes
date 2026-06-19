@@ -122,6 +122,7 @@ class GameViewModel(
     // ── Observar frecuencia cardíaca ─────────────────────────────────
     private fun observeHeartRate() {
         viewModelScope.launch {
+            heartRateSource.startMonitoring()
             heartRateSource.heartRate.collect { bpm ->
                 _state.update { it.copy(heartRate = bpm) }
             }

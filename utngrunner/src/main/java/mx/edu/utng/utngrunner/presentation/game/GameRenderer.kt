@@ -6,6 +6,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.nativeCanvas
 import mx.edu.utng.utngrunner.domain.model.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -160,23 +161,69 @@ object GameRenderer {
     // ── HUD (cabecera con puntuación y vidas) ────────────────────────
     private fun drawHUD(canvas: Canvas, size: Size, state: GameState) {
         val cx = size.width / 2f
+        val cy = size.height / 2f
 
-        // Hora del sistema
-        drawCenteredRect(canvas, cx, 18f, 60f, 14f, Color(0x88000000))
+        // ── Hora del sistema ─────────────────────────────────────────
+        drawCenteredRect(canvas, cx, 22f, 60f, 14f, Color(0x88000000))
+        val timePaint = android.graphics.Paint().apply {
+            color = android.graphics.Color.WHITE
+            textSize = 16f
+            textAlign = android.graphics.Paint.Align.CENTER
+        }
+        canvas.nativeCanvas.drawText(
+            getSystemTime(),
+            cx,
+            26f,
+            timePaint
+        )
 
-        // Vidas (corazones)
+        // ── Vidas (corazones) — centradas horizontalmente ────────────
+        val totalHeartsWidth = state.lives * 18f
+        val heartsStartX = cx - totalHeartsWidth / 2f
         repeat(state.lives) { i ->
-            drawHeart(canvas, 10f + i * 18f, 34f)
+            drawHeart(canvas, 100 + i * 28f, 65f)
         }
 
-        // Frecuencia cardíaca
-        val bpmPaint = Paint().apply { color = Color(0xFFEF9A9A) }
-        canvas.drawCircle(Offset(size.width - 20f, 30f), 6f, bpmPaint)
+        // ── Frecuencia cardíaca — más adentro del círculo ────────────
+        val bpmTextPaint = android.graphics.Paint().apply {
+            color = android.graphics.Color.parseColor("#EF9A9A")
+            textSize = 15f
+            textAlign = android.graphics.Paint.Align.CENTER
+            isFakeBoldText = true
+        }
+        canvas.nativeCanvas.drawText(
+            "♥ ${state.heartRate} bpm",
+            cx,
+            65f,
+            bpmTextPaint
+        )
 
-        // Puntuación
-        val scorePaint = Paint().apply { color = Color(0xFFF9A825) }
-        canvas.drawRect(
-            Rect(cx - 30f, size.height - 24f, cx + 30f, size.height - 10f),
+        // ── Nivel ────────────────────────────────────────────────────
+        val levelPaint = android.graphics.Paint().apply {
+            color = android.graphics.Color.WHITE
+            textSize = 14f
+            textAlign = android.graphics.Paint.Align.CENTER
+            alpha = 180
+        }
+        canvas.nativeCanvas.drawText(
+            "Lv ${state.level}",
+            cx,
+            40f,
+            levelPaint
+        )
+
+        // ── Puntuación — centrada abajo ──────────────────────────────
+        drawCenteredRect(canvas, cx, size.height - 22f, 70f, 16f, Color(0x88000000))
+        val scorePaint = android.graphics.Paint().apply {
+            color = android.graphics.Color.parseColor("#F9A825")
+            textSize = 18f
+            textAlign = android.graphics.Paint.Align.CENTER
+            isFakeBoldText = true
+        }
+        canvas.nativeCanvas.drawText(
+            "${state.score} pts",
+            cx,
+            size.height - 14f,
             scorePaint
         )
     }
