@@ -19,6 +19,7 @@ composeFoundation = "1.2.1"
 wearToolingPreview = "1.0.0"
 coreSplashscreen = "1.0.1"
 uiText = "1.11.2"
+playServicesGamesV2 = "21.0.0"
 
 
 [libraries]
@@ -46,6 +47,7 @@ androidx-compose-foundation = { group = "androidx.wear.compose", name = "compose
 androidx-wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
+play-services-games-v2 = { group = "com.google.android.gms", name = "play-services-games-v2", version.ref = "playServicesGamesV2" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

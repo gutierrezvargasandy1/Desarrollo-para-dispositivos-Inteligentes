@@ -1,0 +1,8 @@
+package mx.edu.utng.utngrunner.domain.usecase
+
+import mx.edu.utng.utngrunner.domain.repository.ScoreRepository
+
+
+class GetHighScoreUseCase(private val repository: ScoreRepository) {
+    suspend operator fun invoke(): Int = repository.getHighScore()
+}
