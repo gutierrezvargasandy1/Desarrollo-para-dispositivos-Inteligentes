@@ -20,6 +20,7 @@ wearToolingPreview = "1.0.0"
 coreSplashscreen = "1.0.1"
 uiText = "1.11.2"
 playServicesGamesV2 = "21.0.0"
+junitJunit = "4.12"
 
 
 [libraries]
@@ -48,6 +49,7 @@ androidx-wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
 play-services-games-v2 = { group = "com.google.android.gms", name = "play-services-games-v2", version.ref = "playServicesGamesV2" }
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
