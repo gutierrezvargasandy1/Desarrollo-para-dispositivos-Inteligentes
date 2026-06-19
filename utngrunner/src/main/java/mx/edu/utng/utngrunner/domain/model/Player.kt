@@ -11,7 +11,7 @@ data class Player(
     val invincibleFrames: Int = 0
 ) {
     companion object {
-        const val FLOOR_Y = 160f
+        const val FLOOR_Y = 340f
         const val GRAVITY = 1.2f
         const val JUMP_VELOCITY = -18f
         const val SLIDE_DURATION = 45
