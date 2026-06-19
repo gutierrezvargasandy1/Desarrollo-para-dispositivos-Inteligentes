@@ -4,6 +4,55 @@
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-MD3-blue)
 
 Aplicación Android de monitoreo de salud personal en tiempo real. Desarrollada como proyecto integrador — UTNG 9° Cuatrimestre.
+# 🎮 UTNG Runner
+
+Endless runner para Wear OS desarrollado con Kotlin y Compose for Wear OS.
+El ingeniero corre por el campus de la UTNG esquivando obstáculos
+(tareas, exámenes, bugs) y recogiendo créditos académicos.
+
+## 🛠️ Stack Tecnológico
+
+| Componente | Tecnología |
+|---|---|
+| Lenguaje | Kotlin 1.9+ |
+| UI | Compose for Wear OS |
+| Arquitectura | MVVM + Clean Architecture |
+| Motor | Canvas + Coroutines (60fps) |
+| Estado | StateFlow |
+| Persistencia | DataStore Preferences |
+| Sensor FC | Health Services API |
+| Haptics | WearableHapticFeedback |
+| Testing | JUnit 4 + coroutinesTest |
+| Build | Gradle KTS · minSdk 30 |
+
+## 🎮 Controles
+
+| Control | Acción |
+|---|---|
+| Toca la pantalla | Saltar |
+| Corona hacia arriba | Saltar |
+| Corona hacia abajo | Deslizarse |
+
+## 🚧 Obstáculos
+
+| Obstáculo | Descripción |
+|---|---|
+| TAREA | Obstáculo mediano rojo |
+| EXAMEN | Obstáculo alto rosa |
+| BUG | Obstáculo cuadrado morado |
+| REPO | Obstáculo ancho azul |
+
+## 🧪 Tests
+
+```bash
+./gradlew :wear:test
+```
+
+## 🚀 Cómo correr
+
+1. Abrir en Android Studio
+2. Conectar emulador Wear OS (API 30+)
+3. Run → wear
 
 ## Stack tecnológico
 
