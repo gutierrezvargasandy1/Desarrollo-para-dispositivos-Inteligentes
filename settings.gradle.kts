@@ -23,3 +23,4 @@ rootProject.name = "SmartHealthMonitor"
 include(":app")
 include(":wearos")
 include(":utngrunner")
+include(":memorymatch")

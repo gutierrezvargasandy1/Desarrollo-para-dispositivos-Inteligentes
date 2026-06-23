@@ -40,11 +40,6 @@ Aplicación Android de monitoreo de salud personal en tiempo real. Desarrollada 
 
 ![WearDashboard](screenshots/wear_dashboard.png)
 
-Paso 2 — PR y Tag v1.2.0
-11.En GitHub: Compare & pull request → título: feat: Wear OS advanced — Rotary Input + WatchFace — S10 Unidad II.
-12.Merge pull request → Confirm merge.
-Checklist de autoevaluación — Unidad II completa
-
 
 ## Capturas de pantalla
 
@@ -61,6 +56,19 @@ Región de evidencias visuales del comportamiento de la aplicación en el emulad
 
 ### Alerta de Emergencia
 ![Alerta](screenshots/alerta.png)
+
+# 📦 MemoryMatchWear OS — Estado del Repositorio
+
+- 🧠 Descripción del juego Memory Match para Wear OS
+- 🏗️ Arquitectura Clean + MVVM
+- ⚙️ Stack técnico (Compose, StateFlow, Room/DataStore, Coroutines, Haptics)
+- 🎮 Mecánica del juego (IDLE → SELECTING → CHECKING → WON)
+- 📁 Estructura del proyecto
+- 🚀 Instrucciones de ejecución (`./gradlew assemble`, `./gradlew test`)
+- 🧪 Cómo correr pruebas unitarias
+- 🏷️ Información de versión `v1.0.0`
+
+## 🏷️ Tag del repositorio
 
 ## Autor
 
