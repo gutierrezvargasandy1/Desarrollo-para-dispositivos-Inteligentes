@@ -21,6 +21,10 @@ coreSplashscreen = "1.0.1"
 uiText = "1.11.2"
 playServicesGamesV2 = "21.0.0"
 junitJunit = "4.12"
+appcompat = "1.7.1"
+tvFoundation = "1.0.0"
+tvMaterial = "1.1.0"
+
 
 
 [libraries]
@@ -50,6 +54,9 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
 play-services-games-v2 = { group = "com.google.android.gms", name = "play-services-games-v2", version.ref = "playServicesGamesV2" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "tvFoundation" }
+androidx-tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "tvMaterial" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
