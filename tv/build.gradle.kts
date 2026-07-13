@@ -75,4 +75,13 @@ dependencies {
     implementation("androidx.room:room-ktx:2.7.2")
 
     kapt("androidx.room:room-compiler:2.7.2")
+
+    // Navigation Compose for TV
+    implementation("androidx.navigation:navigation-compose:2.8.6")
+// ExoPlayer
+    implementation("com.google.android.exoplayer:exoplayer:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
+// Lifecycle Compose (ya deberías tenerlo)
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 }

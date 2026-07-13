@@ -10,28 +10,24 @@ import mx.edu.utng.tv.domain.model.LecturaFC
 import mx.edu.utng.tv.domain.repository.SmartHealthRepository
 
 class SmartHealthRepositoryImpl(
-    private val dao: LecturaFCDao // tu DAO de Room de sesiones anteriores
+    private val dao: LecturaFCDao
 ) : SmartHealthRepository {
 
-    // StateFlow compartido: el sensor/servicio actualiza este valor,
-    // tanto la app de teléfono como el módulo tv lo observan.
     private val _fcActual = MutableStateFlow(0)
     override val fcActual: StateFlow<Int> = _fcActual
 
     override fun obtenerHistorial(): Flow<List<LecturaFC>> {
-        return dao.obtenerTodas() // Flow<List<LecturaFCEntity>> de tu Room DAO
+        return dao.obtenerTodas()
             .map { entidades -> entidades.map { it.toDomain() } }
     }
 
-    /** Llamar desde donde recibas la lectura del sensor (Bluetooth, mock, etc.) */
     fun actualizarFcActual(bpm: Int) {
         _fcActual.value = bpm
     }
 }
 
-// Ajusta este mapper a los campos reales de tu entidad Room
 private fun LecturaFCEntity.toDomain() = LecturaFC(
-    id = id,
+    id = id.toInt(),
     bpm = bpm,
     estado = estado,
     hora = hora

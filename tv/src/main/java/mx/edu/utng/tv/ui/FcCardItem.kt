@@ -10,19 +10,19 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.*
 import mx.edu.utng.tv.domain.model.LecturaFC
 
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun FcCardItem(
-    lectura : LecturaFC,
-    onClick  : () -> Unit,
-    modifier : Modifier = Modifier
+    lectura: LecturaFC,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    // Surface de androidx.tv maneja el foco D-pad automáticamente
     Surface(
         onClick = onClick,
         modifier = modifier.width(200.dp).height(120.dp),
         colors = ClickableSurfaceDefaults.colors(
-            containerColor        = Color(0xFF1565C0), // azul sin foco
-            focusedContainerColor = Color(0xFF42A5F5), // azul claro con foco D-pad
+            containerColor = Color(0xFF1565C0),
+            focusedContainerColor = Color(0xFF42A5F5),
             pressedContainerColor = Color(0xFF0D47A1),
         ),
         shape = ClickableSurfaceDefaults.shape(RoundedCornerShape(12.dp))
