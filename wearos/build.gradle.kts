@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)  // ✅ AGREGAR KSP (igual que en app)
 }
 
 android {
@@ -39,6 +40,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true  // ✅ Agregar para compatibilidad
     }
 }
 
@@ -69,9 +71,11 @@ dependencies {
     implementation("com.google.android.horologist:horologist-compose-layout:0.6.17")
     implementation("com.google.android.horologist:horologist-compose-material:0.6.17")
 
-    // Room — para acceder a LecturaFC directamente
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    // ✅ ROOM - Misma versión que en app
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")  // ✅ Usar KSP en lugar de KAPT
 
     implementation("androidx.compose.material:material-icons-extended")
     implementation(libs.androidx.compose.ui.graphics)

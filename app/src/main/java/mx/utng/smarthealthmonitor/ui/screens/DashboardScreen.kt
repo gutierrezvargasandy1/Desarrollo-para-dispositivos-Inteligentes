@@ -2,12 +2,14 @@ package mx.utng.smarthealthmonitor.ui.screens
 
 import SmartHealthMonitorTheme
 import android.content.res.Configuration
+import android.view.ContextThemeWrapper
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -34,13 +36,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.mediarouter.app.MediaRouteButton
+import com.google.android.gms.cast.framework.CastButtonFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import mx.utng.smarthealthmonitor.BuildConfig
+import mx.utng.smarthealthmonitor.R
 import mx.utng.smarthealthmonitor.data.SmartHealthRepository
 import mx.utng.smarthealthmonitor.ui.components.FilaHistorial
 import mx.utng.smarthealthmonitor.ui.components.TarjetaDato
@@ -55,6 +62,7 @@ fun DashboardScreen(
     val fc by viewModel.fc.collectAsState()
     val pasos by viewModel.pasos.collectAsState()
     val historial by viewModel.historial.collectAsState()
+    val context = LocalContext.current
 
     // ── estado del dialogo y snackbar ──
     var mostrarAlerta by remember { mutableStateOf(false) }
@@ -92,7 +100,28 @@ fun DashboardScreen(
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         titleContentColor = MaterialTheme.colorScheme.onPrimary
-                    )
+                    ),
+                    actions = {
+                        // CastButton usando AndroidView con tema de MediaRouter
+                        AndroidView(
+                            factory = { ctx ->
+                                // Crear un contexto con el tema de MediaRouter
+                                val themedContext = ContextThemeWrapper(
+                                    ctx,
+                                    R.style.Theme_SmartHealthMonitor_MediaRouter
+                                )
+                                MediaRouteButton(themedContext).apply {
+                                    // Configurar el botón con CastButtonFactory
+                                    CastButtonFactory.setUpMediaRouteButton(themedContext, this)
+                                    // Asegurar que el botón tenga un fondo sólido
+                                    setBackgroundResource(android.R.drawable.btn_default)
+                                }
+                            },
+                            modifier = Modifier
+                                .size(48.dp)
+                                .padding(end = 8.dp)
+                        )
+                    }
                 )
             },
             floatingActionButton = {

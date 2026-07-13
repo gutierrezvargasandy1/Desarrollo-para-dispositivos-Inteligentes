@@ -1,5 +1,6 @@
 package mx.edu.utng.wearos.presentation
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -21,12 +22,14 @@ import mx.edu.utng.wearos.presentation.components.WearFCCard
 @Composable
 fun WearDashboardScreen(
     onAlertClick: () -> Unit = {},
-    onHistorialClick: () -> Unit = {},         // NUEVO
+    onHistorialClick: () -> Unit = {},
     viewModel: WearDashboardViewModel = viewModel()
 ) {
-
     val fc by viewModel.fc.collectAsState()
+    val historial by viewModel.historial.collectAsState()
     val listState = rememberScalingLazyListState()
+
+    Log.d("WearDashboard", "Historial size: ${historial.size}")
 
     Scaffold(
         timeText = {
@@ -38,36 +41,49 @@ fun WearDashboardScreen(
             )
         }
     ) {
-
         ScalingLazyColumn(
-            state    = listState,
+            state = listState,
             modifier = Modifier.fillMaxSize()
         ) {
-
             item {
                 WearFCCard(
-                    fc       = fc,
+                    fc = fc,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            // Botón para generar lecturas de prueba
+            item {
+                Chip(
+                    label = { Text("📊 Generar Lectura") },
+                    onClick = {
+                        val fcAleatorio = (60..120).random()
+                        Log.d("WearDashboard", "Generando lectura: $fcAleatorio bpm")
+                        viewModel.actualizarYGuardarFC(fcAleatorio)
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
 
             item {
                 Chip(
-                    label   = { Text("🚨 Alerta") },
+                    label = { Text("🚨 Alerta") },
                     onClick = onAlertClick,
-                    colors  = ChipDefaults.primaryChipColors(
+                    colors = ChipDefaults.primaryChipColors(
                         backgroundColor = MaterialTheme.colors.error
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
             }
 
-            // NUEVO chip de Historial
+            // Chip de Historial con contador
             item {
                 Chip(
-                    label    = { Text("📋 Historial") },
-                    onClick  = onHistorialClick,
-                    colors   = ChipDefaults.secondaryChipColors(),
+                    label = {
+                        Text("📋 Historial (${historial.size})")
+                    },
+                    onClick = onHistorialClick,
+                    colors = ChipDefaults.secondaryChipColors(),
                     modifier = Modifier.fillMaxWidth()
                 )
             }

@@ -14,4 +14,10 @@ interface LecturaFCDao {
 
     @Query("SELECT * FROM lecturas_fc ORDER BY id DESC LIMIT 50")
     fun obtenerUltimas(): Flow<List<LecturaFC>>
+
+    @Query("DELETE FROM lecturas_fc")
+    suspend fun borrarTodas()
+
+    @Query("SELECT COUNT(*) FROM lecturas_fc")
+    suspend fun contarLecturas(): Int
 }
