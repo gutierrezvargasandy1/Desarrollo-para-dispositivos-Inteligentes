@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "mx.edu.utng.utngrunner-mergeDebugResources-54:/values-round-v23/values-round-v23.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\andre\\OneDrive\\Escritorio\\Desarrollo-para-dispositivos-Inteligentes\\utngrunner\\src\\main\\res\\values-round\\strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "75",
+                        "endOffsets": "87"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "75",
+                        "endOffsets": "126"
+                    }
+                }
+            ]
+        }
+    ]
+}

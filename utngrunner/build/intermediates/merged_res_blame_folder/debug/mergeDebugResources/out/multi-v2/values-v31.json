@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "mx.edu.utng.utngrunner-mergeDebugResources-54:/values-v31/values-v31.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\andre\\.gradle\\caches\\8.13\\transforms\\4d2fb3cae77f47c9b7a6c32957c97db9\\transformed\\core-splashscreen-1.0.1\\res\\values-v31\\values-v31.xml",
+                    "from": {
+                        "startLines": "2,9",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,473",
+                        "endLines": "8,13",
+                        "endColumns": "12,12",
+                        "endOffsets": "468,697"
+                    }
+                }
+            ]
+        }
+    ]
+}

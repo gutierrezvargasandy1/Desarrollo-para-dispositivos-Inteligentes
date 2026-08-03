@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mx.edu.utng.utngrunner"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="30"
+        android:targetSdkVersion="36" />
+
+    <!-- Permiso original -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Health Services para frecuencia cardíaca -->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+
+    <!-- Haptics -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Wear OS feature -->
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <queries>
+        <package android:name="com.google.android.gms" />
+        <package android:name="com.android.vending" />
+        <package android:name="com.google.android.wearable.healthservices" />
+    </queries>
+
+    <permission
+        android:name="mx.edu.utng.utngrunner.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="mx.edu.utng.utngrunner.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:extractNativeLibs="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:testOnly="true"
+        android:theme="@android:style/Theme.DeviceDefault" >
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="true" />
+        <uses-library
+            android:name="wear-sdk"
+            android:required="false" />
+
+        <!-- App standalone (no requiere celular) -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name="mx.edu.utng.utngrunner.presentation.MainActivity"
+            android:exported="true"
+            android:label="UTNG Runner"
+            android:taskAffinity=""
+            android:theme="@style/MainActivityTheme.Starting" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <profileable
+            android:enabled="true"
+            android:shell="true" />
+
+        <provider
+            android:name="com.google.android.gms.games.provider.PlayGamesInitProvider"
+            android:authorities="mx.edu.utng.utngrunner.playgamesinitprovider"
+            android:exported="false"
+            android:initOrder="99" />
+
+        <activity
+            android:name="com.google.android.gms.games.internal.v2.resolution.GamesResolutionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Games.Transparent" />
+        <activity
+            android:name="com.google.android.gms.games.internal.v2.appshortcuts.PlayGamesAppShortcutsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Games.Transparent" />
+
+        <meta-data
+            android:name="com.google.android.gms.games.version"
+            android:value="@string/play_games_sdk_version" />
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="androidx.activity.ComponentActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+        <activity
+            android:name="androidx.compose.ui.tooling.PreviewActivity"
+            android:exported="true" />
+
+        <service
+            android:name="androidx.health.services.client.VersionApiService"
+            android:exported="true"
+            android:permission="com.google.android.wearable.healthservices.permission.PASSIVE_DATA_BINDING" >
+            <intent-filter>
+                <action android:name="hs.versionclient.BIND" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="mx.edu.utng.utngrunner.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:directBootAware="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.DUMP" >
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

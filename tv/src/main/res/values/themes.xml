@@ -1,0 +1,5 @@
+<resources>
+        <item name="colorPrimary">@color/sh_primary</item>
+        <item name="colorAccent">@color/sh_amber</item>
+    </style>
+</resources>
